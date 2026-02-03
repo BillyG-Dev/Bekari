@@ -17,6 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.shortcuts import render
+from django.conf import settings
+from django.conf.urls.static import static
+from django.urls import include
+
 
 def home(request):
     return render(request, 'home.html')
@@ -24,4 +28,8 @@ def home(request):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('products/', include('products.urls')),
+
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
