@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4">Your Cart 🛒</h2>
+
+    {% if items %}
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th class="text-center">Quantity</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+
+                    <td class="text-center">
+                        <a href="{% url 'decrease_cart_item' item.product.id %}"
+                           class="btn btn-sm btn-outline-secondary">−</a>
+
+                        <span class="mx-2">{{ item.quantity }}</span>
+
+                        <a href="{% url 'add_to_cart' item.product.id %}"
+                           class="btn btn-sm btn-outline-secondary">+</a>
+                    </td>
+
+                    <td>Ksh {{ item.subtotal }}</td>
+
+                    <td>
+                        <a href="{% url 'remove_from_cart' item.product.id %}"
+                           class="btn btn-sm btn-outline-danger">
+                            Remove
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <h4>Total: <strong>Ksh {{ total }}</strong></h4>
+
+            <a href="#" class="btn btn-success btn-lg">
+                Proceed to Checkout
+            </a>
+        </div>
+
+    {% else %}
+        <!-- EMPTY CART UX -->
+        <div class="text-center py-5">
+            <h4>Your cart is empty 😕</h4>
+            <p class="text-muted">Looks like you haven’t added anything yet.</p>
+            <a href="/products/" class="btn btn-dark mt-3">
+                Continue Shopping
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

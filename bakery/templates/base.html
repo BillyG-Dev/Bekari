@@ -22,7 +22,17 @@
 {% block hero %}{% endblock %}
 
 <!-- Main content -->
-<main>
+<main class="flex-grow-1 flex-column vh-100">
+    {% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
+
     {% block content %}{% endblock %}
 </main>
 
